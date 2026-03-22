@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stitch & Stride – Men's Fashion</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Georgia, serif; color: #222; background: #fff; }
+
+    /* NAV */
+    nav {
+      background: #1a1a1a;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav .logo {
+      color: #fff;
+      font-size: 22px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    nav ul { list-style: none; display: flex; gap: 30px; }
+    nav ul li a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 1px;
+      font-family: Arial, sans-serif;
+      cursor: pointer;
+    }
+    nav ul li a:hover { color: #fff; }
+    nav ul li a.active { color: #fff; border-bottom: 2px solid #c49a4a; padding-bottom: 2px; }
+
+    /* PAGE */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* HERO */
+    .hero {
+      background: #f5f0eb;
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .hero h1 { font-size: 42px; letter-spacing: 3px; margin-bottom: 16px; text-transform: uppercase; }
+    .hero p { font-size: 16px; color: #555; max-width: 520px; margin: 0 auto 28px; line-height: 1.7; font-family: Arial, sans-serif; }
+    .btn {
+      display: inline-block;
+      padding: 12px 32px;
+      background: #1a1a1a;
+      color: #fff;
+      text-decoration: none;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover { background: #333; }
+
+    /* HOME FEATURES */
+    .home-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0;
+      border-top: 1px solid #e0e0e0;
+    }
+    .home-feature {
+      padding: 36px 32px;
+      border-right: 1px solid #e0e0e0;
+      text-align: center;
+    }
+    .home-feature:last-child { border-right: none; }
+    .home-feature .icon { font-size: 28px; margin-bottom: 12px; }
+    .home-feature h3 { font-size: 15px; letter-spacing: 1px; margin-bottom: 8px; }
+    .home-feature p { font-family: Arial, sans-serif; font-size: 13px; color: #777; line-height: 1.6; }
+
+    /* SECTION COMMON */
+    .page-content { padding: 60px 40px; }
+    .page-content h2 {
+      font-size: 28px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-sub {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 40px;
+    }
+    hr.divider { border: none; border-top: 1px solid #ddd; margin-bottom: 40px; }
+
+    /* PRODUCTS */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 28px;
+    }
+    .product-card { border: 1px solid #e0e0e0; }
+    .product-img {
+      width: 100%;
+      height: 260px;
+      background: #f0ece8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+    .product-info { padding: 16px; }
+    .product-info h3 { font-size: 16px; margin-bottom: 6px; }
+    .product-info .tag { font-size: 12px; font-family: Arial, sans-serif; color: #888; margin-bottom: 8px; }
+    .product-info .price { font-size: 17px; font-weight: bold; margin-bottom: 12px; }
+    .product-info button {
+      width: 100%;
+      padding: 9px 0;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+    .product-info button:hover { background: #333; }
+
+    /* ABOUT */
+    #page-about { background: #f9f6f2; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .about-text p {
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      color: #444;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .about-values h3 { font-size: 18px; margin-bottom: 20px; letter-spacing: 1px; }
+    .value-item { margin-bottom: 20px; }
+    .value-item h4 { font-size: 15px; margin-bottom: 4px; }
+    .value-item p { font-family: Arial, sans-serif; font-size: 14px; color: #666; line-height: 1.6; }
+
+    /* GUIDE */
+    #page-guide { background: #fff; }
+    .guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+    .guide-card {
+      border: 1px solid #e0e0e0;
+      padding: 24px;
+    }
+    .guide-card .icon { font-size: 28px; margin-bottom: 14px; }
+    .guide-card h3 { font-size: 16px; margin-bottom: 8px; letter-spacing: 1px; }
+    .guide-card p { font-family: Arial, sans-serif; font-size: 14px; color: #666; line-height: 1.7; }
+
+    /* SIZE CHART */
+    .size-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 40px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+    .size-table thead { background: #1a1a1a; color: #fff; }
+    .size-table th, .size-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .size-table tr:nth-child(even) { background: #f9f9f9; }
+
+    /* CAREER */
+    #page-career { background: #f9f6f2; }
+    .career-intro {
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      color: #444;
+      max-width: 640px;
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .job-list { display: flex; flex-direction: column; gap: 16px; }
+    .job-card {
+      border: 1px solid #e0e0e0;
+      background: #fff;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .job-card .job-info h3 { font-size: 17px; margin-bottom: 4px; }
+    .job-card .job-info span {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #888;
+    }
+    .job-card .job-meta { text-align: right; }
+    .job-card .job-meta .location {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+    .job-card .job-meta a {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #1a1a1a;
+      border: 1px solid #1a1a1a;
+      padding: 6px 16px;
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+    .job-card .job-meta a:hover { background: #1a1a1a; color: #fff; }
+
+    /* NEWSLETTER */
+    .newsletter {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 50px 40px;
+      text-align: center;
+    }
+    .newsletter h2 { font-size: 24px; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; }
+    .newsletter p { font-family: Arial, sans-serif; font-size: 14px; color: #aaa; margin-bottom: 24px; }
+    .newsletter form { display: flex; justify-content: center; gap: 0; max-width: 440px; margin: 0 auto; }
+    .newsletter input {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      outline: none;
+    }
+    .newsletter button {
+      padding: 12px 24px;
+      background: #c49a4a;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+    .newsletter button:hover { background: #b3893a; }
+
+    /* FOOTER */
+    footer {
+      background: #111;
+      color: #aaa;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 32px;
+    }
+    footer h4 { color: #fff; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 8px; }
+    footer ul li a { color: #aaa; text-decoration: none; font-family: Arial, sans-serif; font-size: 13px; cursor: pointer; }
+    footer ul li a:hover { color: #fff; }
+    footer p { font-family: Arial, sans-serif; font-size: 13px; line-height: 1.7; }
+    .footer-bottom {
+      background: #0d0d0d;
+      text-align: center;
+      padding: 16px 40px;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      color: #666;
+    }
+
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; }
+      nav ul { gap: 16px; }
+      .hero h1 { font-size: 28px; }
+      .job-card { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .job-card .job-meta { text-align: left; }
+      nav { padding: 0 16px; }
+      .page-content { padding: 40px 20px; }
+      .home-feature { border-right: none; border-bottom: 1px solid #e0e0e0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="showPage('home')">Stitch &amp; Stride</div>
+  <ul>
+    <li><a onclick="showPage('products')" id="nav-products">Products</a></li>
+    <li><a onclick="showPage('about')"    id="nav-about">About</a></li>
+    <li><a onclick="showPage('guide')"    id="nav-guide">Guide</a></li>
+    <li><a onclick="showPage('career')"   id="nav-career">Careers</a></li>
+  </ul>
+</nav>
+
+<!-- ============ HOME PAGE ============ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <h1>Dress with Purpose</h1>
+    <p>Refined menswear built for the modern man. From boardrooms to weekend outings, we have a fit for every occasion.</p>
+    <button class="btn" onclick="showPage('products')">Shop Now</button>
+  </div>
+  <div class="home-features">
+    <div class="home-feature">
+      <div class="icon">🚚</div>
+      <h3>Free Shipping</h3>
+      <p>On all orders over $75. Delivered in 3–5 business days.</p>
+    </div>
+    <div class="home-feature">
+      <div class="icon">↩️</div>
+      <h3>Easy Returns</h3>
+      <p>30-day hassle-free returns. No questions asked.</p>
+    </div>
+    <div class="home-feature">
+      <div class="icon">🧵</div>
+      <h3>Quality Fabric</h3>
+      <p>Every piece is crafted from premium, lasting materials.</p>
+    </div>
+    <div class="home-feature">
+      <div class="icon">💬</div>
+      <h3>Real Support</h3>
+      <p>Talk to a real person — not a bot — Mon to Sat, 9am–6pm.</p>
+    </div>
+  </div>
+
+  <!-- Mini product preview -->
+  <div class="page-content">
+    <h2>New Arrivals</h2>
+    <p class="section-sub">Fresh pieces added this season.</p>
+    <hr class="divider"/>
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img">🧥</div>
+        <div class="product-info">
+          <h3>Slim Fit Blazer</h3>
+          <div class="tag">Formal / Semi-Formal</div>
+          <div class="price">$89.00</div>
+          <button onclick="showPage('products')">View All Products</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">👔</div>
+        <div class="product-info">
+          <h3>Oxford Button-Down Shirt</h3>
+          <div class="tag">Casual / Smart Casual</div>
+          <div class="price">$42.00</div>
+          <button onclick="showPage('products')">View All Products</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">👖</div>
+        <div class="product-info">
+          <h3>Tapered Chino Trousers</h3>
+          <div class="tag">Casual / Everyday</div>
+          <div class="price">$55.00</div>
+          <button onclick="showPage('products')">View All Products</button>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">🧣</div>
+        <div class="product-info">
+          <h3>Wool Crewneck Sweater</h3>
+          <div class="tag">Smart Casual / Winter</div>
+          <div class="price">$68.00</div>
+          <button onclick="showPage('products')">View All Products</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Newsletter -->
+  <div class="newsletter">
+    <h2>Stay in the Loop</h2>
+    <p>New arrivals, style tips, and member-only discounts — straight to your inbox.</p>
+    <form onsubmit="return false;">
+      <input type="email" placeholder="Your email address" />
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+      <h4>Stitch &amp; Stride</h4>
+      <p>Menswear for the modern man. Quality cuts, honest prices, and clothes that last.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <ul>
+        <li><a onclick="showPage('products')">New Arrivals</a></li>
+        <li><a onclick="showPage('products')">Shirts</a></li>
+        <li><a onclick="showPage('products')">Trousers</a></li>
+        <li><a onclick="showPage('products')">Outerwear</a></li>
+        <li><a onclick="showPage('products')">Accessories</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Returns &amp; Exchanges</a></li>
+        <li><a href="#">Order Tracking</a></li>
+        <li><a onclick="showPage('guide')">Size Guide</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a onclick="showPage('career')">Careers</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-bottom">&copy; 2026 Stitch &amp; Stride. All rights reserved.</div>
+</div>
+
+<!-- ============ PRODUCTS PAGE ============ -->
+<div class="page" id="page-products">
+  <div class="page-content">
+    <h2>Our Collection</h2>
+    <p class="section-sub">Curated picks for the season — classic cuts, quality fabric.</p>
+    <hr class="divider"/>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="product-img">🧥</div>
+        <div class="product-info">
+          <h3>Slim Fit Blazer</h3>
+          <div class="tag">Formal / Semi-Formal</div>
+          <div class="price">$89.00</div>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">👔</div>
+        <div class="product-info">
+          <h3>Oxford Button-Down Shirt</h3>
+          <div class="tag">Casual / Smart Casual</div>
+          <div class="price">$42.00</div>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">👖</div>
+        <div class="product-info">
+          <h3>Tapered Chino Trousers</h3>
+          <div class="tag">Casual / Everyday</div>
+          <div class="price">$55.00</div>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">🧣</div>
+        <div class="product-info">
+          <h3>Wool Crewneck Sweater</h3>
+          <div class="tag">Smart Casual / Winter</div>
+          <div class="price">$68.00</div>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">🥾</div>
+        <div class="product-info">
+          <h3>Chelsea Leather Boots</h3>
+          <div class="tag">Footwear</div>
+          <div class="price">$115.00</div>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">🧤</div>
+        <div class="product-info">
+          <h3>Classic Denim Jacket</h3>
+          <div class="tag">Casual / Outerwear</div>
+          <div class="price">$76.00</div>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">👕</div>
+        <div class="product-info">
+          <h3>Pique Polo Shirt</h3>
+          <div class="tag">Casual / Summer</div>
+          <div class="price">$34.00</div>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">🧢</div>
+        <div class="product-info">
+          <h3>Structured Cap</h3>
+          <div class="tag">Accessories</div>
+          <div class="price">$22.00</div>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">🧦</div>
+        <div class="product-info">
+          <h3>Merino Dress Socks (3-Pack)</h3>
+          <div class="tag">Accessories</div>
+          <div class="price">$18.00</div>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">🩳</div>
+        <div class="product-info">
+          <h3>Linen Shorts</h3>
+          <div class="tag">Casual / Summer</div>
+          <div class="price">$38.00</div>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">👞</div>
+        <div class="product-info">
+          <h3>Suede Loafers</h3>
+          <div class="tag">Footwear / Smart Casual</div>
+          <div class="price">$98.00</div>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">🎽</div>
+        <div class="product-info">
+          <h3>Lightweight Bomber Jacket</h3>
+          <div class="tag">Casual / Outerwear</div>
+          <div class="price">$85.00</div>
+          <button>Add to Cart</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="newsletter">
+    <h2>Stay in the Loop</h2>
+    <p>New arrivals, style tips, and member-only discounts — straight to your inbox.</p>
+    <form onsubmit="return false;">
+      <input type="email" placeholder="Your email address" />
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+  <footer>
+    <div>
+      <h4>Stitch &amp; Stride</h4>
+      <p>Menswear for the modern man. Quality cuts, honest prices, and clothes that last.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <ul>
+        <li><a onclick="showPage('products')">New Arrivals</a></li>
+        <li><a onclick="showPage('products')">Shirts</a></li>
+        <li><a onclick="showPage('products')">Trousers</a></li>
+        <li><a onclick="showPage('products')">Outerwear</a></li>
+        <li><a onclick="showPage('products')">Accessories</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Returns &amp; Exchanges</a></li>
+        <li><a onclick="showPage('guide')">Size Guide</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a onclick="showPage('career')">Careers</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-bottom">&copy; 2026 Stitch &amp; Stride. All rights reserved.</div>
+</div>
+
+<!-- ============ ABOUT PAGE ============ -->
+<div class="page" id="page-about">
+  <div class="page-content">
+    <h2>About Us</h2>
+    <p class="section-sub">Who we are and what we stand for.</p>
+    <hr class="divider"/>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          Stitch &amp; Stride was founded in 2018 with one simple belief: that well-dressed men don't need to spend a fortune. We started as a small workshop in Portland, Oregon, stitching together timeless pieces that blend comfort with sophistication.
+        </p>
+        <p>
+          Today, we serve customers across North America with a carefully curated range of menswear — from everyday casual to sharp formal wear. Every piece in our collection is chosen with intention. We work directly with manufacturers who share our commitment to fair labor practices and durable craftsmanship.
+        </p>
+        <p>
+          Our team of designers studies both classic tailoring traditions and modern street trends to give you clothes that are neither trendy nor outdated — just right. We believe fashion should work for you, not the other way around.
+        </p>
+      </div>
+      <div class="about-values">
+        <h3>Our Values</h3>
+        <div class="value-item">
+          <h4>Quality Over Quantity</h4>
+          <p>We'd rather offer thirty great products than three hundred mediocre ones. Every garment passes a thorough quality check before it reaches you.</p>
+        </div>
+        <div class="value-item">
+          <h4>Ethical Sourcing</h4>
+          <p>We partner with suppliers who pay fair wages and maintain safe working conditions. We visit our factories and stand behind the people who make our clothes.</p>
+        </div>
+        <div class="value-item">
+          <h4>Sustainable Practices</h4>
+          <p>Our packaging is fully recyclable, and we are actively working toward a carbon-neutral shipping model by 2027.</p>
+        </div>
+        <div class="value-item">
+          <h4>Customer First</h4>
+          <p>Free returns, real support (not just bots), and honest sizing — because shopping for clothes online should be stress-free.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div>
+      <h4>Stitch &amp; Stride</h4>
+      <p>Menswear for the modern man. Quality cuts, honest prices, and clothes that last.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <ul>
+        <li><a onclick="showPage('products')">Products</a></li>
+        <li><a onclick="showPage('guide')">Style Guide</a></li>
+        <li><a onclick="showPage('career')">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Returns &amp; Exchanges</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-bottom">&copy; 2026 Stitch &amp; Stride. All rights reserved.</div>
+</div>
+
+<!-- ============ GUIDE PAGE ============ -->
+<div class="page" id="page-guide">
+  <div class="page-content">
+    <h2>Style &amp; Fit Guide</h2>
+    <p class="section-sub">Tips to help you dress well and find your perfect fit.</p>
+    <hr class="divider"/>
+
+    <div class="guide-grid">
+      <div class="guide-card">
+        <div class="icon">📐</div>
+        <h3>How to Measure Yourself</h3>
+        <p>Use a soft tape measure. Measure your chest at the fullest point, waist at the natural waistline, and hips around the widest part. For inseam, measure from your crotch to ankle. Always measure over light clothing for accuracy.</p>
+      </div>
+      <div class="guide-card">
+        <div class="icon">🎨</div>
+        <h3>Building a Capsule Wardrobe</h3>
+        <p>Start with neutral basics: white and navy shirts, one grey and one navy chino, a versatile blazer in charcoal, and a clean pair of white sneakers. These 5–6 pieces can create over 20 outfits when mixed properly.</p>
+      </div>
+      <div class="guide-card">
+        <div class="icon">🪡</div>
+        <h3>Understanding Fabrics</h3>
+        <p>Cotton is breathable and great for daily wear. Wool is warm and wrinkle-resistant — ideal for formal looks. Linen is perfect for summer. Avoid heavy polyester blends in warm climates as they trap heat and reduce comfort.</p>
+      </div>
+      <div class="guide-card">
+        <div class="icon">👔</div>
+        <h3>Dressing for Occasions</h3>
+        <p>Business formal calls for a suit and tie. Smart casual means a blazer, chinos, and a collared shirt — no tie needed. Casual is open: jeans, a clean tee or polo, and neat footwear. When in doubt, overdress slightly.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:48px; margin-bottom:16px; font-size:18px; letter-spacing:1px;">Size Chart</h3>
+    <table class="size-table">
+      <thead>
+        <tr>
+          <th>Size</th>
+          <th>Chest (in)</th>
+          <th>Waist (in)</th>
+          <th>Hip (in)</th>
+          <th>Shoulder (in)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>XS</td><td>34 – 35</td><td>28 – 29</td><td>35 – 36</td><td>16.5</td></tr>
+        <tr><td>S</td><td>36 – 37</td><td>30 – 31</td><td>37 – 38</td><td>17.0</td></tr>
+        <tr><td>M</td><td>38 – 39</td><td>32 – 33</td><td>39 – 40</td><td>17.5</td></tr>
+        <tr><td>L</td><td>40 – 41</td><td>34 – 35</td><td>41 – 42</td><td>18.5</td></tr>
+        <tr><td>XL</td><td>42 – 44</td><td>36 – 38</td><td>43 – 45</td><td>19.5</td></tr>
+        <tr><td>2XL</td><td>45 – 47</td><td>39 – 41</td><td>46 – 48</td><td>20.5</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <footer>
+    <div>
+      <h4>Stitch &amp; Stride</h4>
+      <p>Menswear for the modern man. Quality cuts, honest prices, and clothes that last.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <ul>
+        <li><a onclick="showPage('products')">Products</a></li>
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a onclick="showPage('career')">Careers</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">FAQs</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-bottom">&copy; 2026 Stitch &amp; Stride. All rights reserved.</div>
+</div>
+
+<!-- ============ CAREER PAGE ============ -->
+<div class="page" id="page-career">
+  <div class="page-content">
+    <h2>Careers</h2>
+    <p class="section-sub">Join the team building the next chapter of menswear.</p>
+    <hr class="divider"/>
+    <p class="career-intro">
+      We're a small, focused team that cares deeply about craft, people, and doing things right. If you're passionate about fashion, e-commerce, or building great products and want to work in a place that values your contribution, we'd love to hear from you.
+    </p>
+
+    <div class="job-list">
+
+      <div class="job-card">
+        <div class="job-info">
+          <h3>Product Designer – Menswear</h3>
+          <span>Full-time · Design Team</span>
+        </div>
+        <div class="job-meta">
+          <div class="location">Portland, OR (Hybrid)</div>
+          <a href="#">Apply Now</a>
+        </div>
+      </div>
+
+      <div class="job-card">
+        <div class="job-info">
+          <h3>E-Commerce Manager</h3>
+          <span>Full-time · Digital</span>
+        </div>
+        <div class="job-meta">
+          <div class="location">Remote</div>
+          <a href="#">Apply Now</a>
+        </div>
+      </div>
+
+      <div class="job-card">
+        <div class="job-info">
+          <h3>Customer Experience Associate</h3>
+          <span>Part-time / Full-time · Support</span>
+        </div>
+        <div class="job-meta">
+          <div class="location">Remote</div>
+          <a href="#">Apply Now</a>
+        </div>
+      </div>
+
+      <div class="job-card">
+        <div class="job-info">
+          <h3>Warehouse &amp; Fulfillment Lead</h3>
+          <span>Full-time · Operations</span>
+        </div>
+        <div class="job-meta">
+          <div class="location">Portland, OR (On-site)</div>
+          <a href="#">Apply Now</a>
+        </div>
+      </div>
+
+      <div class="job-card">
+        <div class="job-info">
+          <h3>Brand &amp; Content Strategist</h3>
+          <span>Full-time · Marketing</span>
+        </div>
+        <div class="job-meta">
+          <div class="location">Remote / Portland (Flexible)</div>
+          <a href="#">Apply Now</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <footer>
+    <div>
+      <h4>Stitch &amp; Stride</h4>
+      <p>Menswear for the modern man. Quality cuts, honest prices, and clothes that last.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <ul>
+        <li><a onclick="showPage('products')">Products</a></li>
+        <li><a onclick="showPage('guide')">Style Guide</a></li>
+        <li><a onclick="showPage('about')">About Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Returns &amp; Exchanges</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a onclick="showPage('career')">Careers</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-bottom">&copy; 2026 Stitch &amp; Stride. All rights reserved.</div>
+</div>
+
+<script>
+  function showPage(name) {
+    // Hide all pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // Remove active from all nav links
+    document.querySelectorAll('nav ul li a').forEach(a => a.classList.remove('active'));
+
+    // Show target page
+    const target = document.getElementById('page-' + name);
+    if (target) target.classList.add('active');
+
+    // Highlight active nav link (home has no nav item)
+    const navLink = document.getElementById('nav-' + name);
+    if (navLink) navLink.classList.add('active');
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
